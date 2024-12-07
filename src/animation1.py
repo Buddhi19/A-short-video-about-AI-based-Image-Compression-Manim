@@ -152,6 +152,7 @@ class INTRO_FOR_COMPRESSION(Scene):
         self.wait(2)
 
         text_spatial = Tex("Spatial Redundancy exists among neighboring pixels ", font_size=40).move_to(DOWN*2.5)
+        text_spatial.color = YELLOW
         self.play(Write(text_spatial))
 
         self.wait(1)
@@ -160,22 +161,3 @@ class INTRO_FOR_COMPRESSION(Scene):
         text_summary.color = YELLOW
         self.play(Write(text_summary))
         self.wait(2)
-
-        # img = cv2.imread(os.path.join(main_dir, "Data","1.jpg"))
-        # b,g,r = cv2.split(img)
-        # r = cv2.resize(r, (8,8))
-        # r_array = []
-        # for i in range(8):
-        #     for j in range(8):
-        #         r_array.append(r[i][j])
-
-        # texts = []
-        # for i in range(len(rectangles)):
-        #     # print the value of each pixel
-        #     text = Tex(str(r_array[i]), color=WHITE).scale(0.5)
-        #     text.move_to(rectangles[i].get_center())
-        #     texts.append(text)
-        # self.play(*[Write(text) for text in texts])
-        # self.wait(1)
-        
-    
