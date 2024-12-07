@@ -1,0 +1,6 @@
+# gitignore for mp4
+*.mp4
+*.tex
+*.pdf
+__pycache__/
+media/
