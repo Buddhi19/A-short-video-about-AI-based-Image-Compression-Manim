@@ -112,36 +112,36 @@ class AI_DRIVEN_COMPRESSION(Scene):
 
 
     def CNN_architecture(self):
-        Title = Tex("A General Neural Network based image codec", font_size = 80).scale(0.7)
+        Title = Tex("Multi-layer Perceptron based Image Coding", font_size = 80).scale(0.7)
         Title.color = RED
         self.play(Write(Title))
         self.wait(1)
         self.play(Title.animate.shift(UP*3+LEFT*4).scale(0.5))
 
 
-        input_neurons = VGroup(*[Circle(radius=0.2, color=BLUE,fill_opacity = 1).move_to(UP * i + LEFT * 5) for i in range(-2, 3)])
+        input_neurons = VGroup(*[Circle(radius=0.2, color=BLUE,fill_opacity = 0.5).move_to(UP * i + LEFT * 5) for i in range(-2, 3)])
         input_label = Text("Input Layer\n Pixels", font_size=18).next_to(input_neurons, LEFT)
 
         # Hidden Layers
-        compression_neurons = VGroup(*[Circle(radius=0.2, color=GREEN, fill_opacity = 1).move_to(UP * i + LEFT * 3) for i in range(-1, 2)])
+        compression_neurons = VGroup(*[Circle(radius=0.2, color=GREEN, fill_opacity = 0.5).move_to(UP * i + LEFT * 3) for i in range(-1, 2)])
         hidden_label_1 = Tex("Compression Net (Coder)", font_size=20).next_to(compression_neurons, UP)
 
-        reconstruction_neurons = VGroup(*[Circle(radius=0.2, color=ORANGE, fill_opacity = 1).move_to(UP * i + RIGHT * 3) for i in range(-1, 2)])
+        reconstruction_neurons = VGroup(*[Circle(radius=0.2, color=ORANGE, fill_opacity = 0.5).move_to(UP * i + RIGHT * 3) for i in range(-1, 2)])
         hidden_label_2 = Tex("Reconstruction Net (Decoder)", font_size=20).next_to(reconstruction_neurons, UP)
 
         # Output Layer
-        output_neurons = VGroup(*[Circle(radius=0.2, color=RED,fill_opacity = 1).move_to(UP * i + RIGHT * 5) for i in range(-2, 3)])
-        output_label = Text("Output Layer\n Pixels", font_size=18).next_to(output_neurons, RIGHT)
+        output_neurons = VGroup(*[Circle(radius=0.2, color=RED,fill_opacity = 0.5).move_to(UP * i + RIGHT * 5) for i in range(-2, 3)])
+        output_label = Text("Output Layer\n Pixels", font_size=15).next_to(output_neurons, RIGHT)
 
         # Connections
         input_to_compression = VGroup(*[Line(start, end, stroke_width=2)
                  for start in input_neurons
                  for end in compression_neurons])
         
-        quantizer_box = Rectangle(width=1.2, height=1, color=YELLOW,fill_opacity = 1).move_to(LEFT * 1.5)
+        quantizer_box = Rectangle(width=1.2, height=1, color=YELLOW,fill_opacity = 0.5).move_to(LEFT * 1.5)
         quantizer_label = Tex("Quantizer", font_size=18).move_to(quantizer_box)
 
-        transmission_box = Rectangle(width=2, height=1, color=PURPLE,fill_opacity = 1).move_to(RIGHT * 0.5)
+        transmission_box = Rectangle(width=2, height=1, color=PURPLE,fill_opacity = 0.5).move_to(RIGHT * 0.5)
         transmission_label = Tex("Transmission Channel", font_size=18).move_to(transmission_box)
 
         compression_to_quantizer = VGroup(*[Line(start,quantizer_box.get_left() , stroke_width=2)
@@ -173,8 +173,8 @@ class AI_DRIVEN_COMPRESSION(Scene):
         self.play(FadeIn(quantizer_to_transmission))
         self.play(FadeIn(transmission_box, transmission_label))
         
-        self.play(FadeIn(transmission_to_reconstruction))
         self.play(FadeIn(reconstruction_neurons, hidden_label_2))
+        self.play(FadeIn(transmission_to_reconstruction))
         
         self.play(FadeIn(output_neurons, output_label))
         self.play(Create(reconstruction_to_output))

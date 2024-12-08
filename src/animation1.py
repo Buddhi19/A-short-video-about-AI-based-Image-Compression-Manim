@@ -146,7 +146,7 @@ class INTRO_FOR_COMPRESSION(Scene):
 
         self.wait(1)
         self.play(FadeOut(text_spatial))
-        text_summary = Tex("Besides reducing statistical redundancy by entropy coding and transform techniques, \nthe prediction and quantization techniques are used to \nreduce spatial redundancy and visual redundancy in images").move_to(DOWN*2.5).scale(0.7)
+        text_summary = Tex("In MLP Neural Networks,").move_to(DOWN*2.5).scale(0.7)
         text_summary.color = YELLOW
         self.play(Write(text_summary))
         self.wait(2)
@@ -159,7 +159,3 @@ class INTRO_FOR_COMPRESSION(Scene):
             for i in rectangles_color:
                 self.play(rectangles[i+j].animate.set_fill(GREEN, 0.5))
             self.play(rectangles[9+j].animate.set_fill(RED, 0.5))
-
-        
-
-
