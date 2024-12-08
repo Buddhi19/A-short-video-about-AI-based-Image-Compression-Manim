@@ -80,11 +80,6 @@ class INTRO_FOR_COMPRESSION(Scene):
         self.play(FadeOut(Text2), FadeOut(img), FadeOut(Text))
         self.play(img_took.animate.move_to(ORIGIN))
 
-        text12 = Tex("Consider the RGB channels", font_size=50).move_to(DOWN*2.5)
-        text12.color = YELLOW
-        self.play(Write(text12))
-        self.wait(1)
-
         path = os.path.join(main_dir, "Data","1_g.png")
         img_g = ImageMobject(path).scale(0.15).move_to(RIGHT*0.5+UP*0.5)
         img_g.z_index = -1
@@ -93,11 +88,6 @@ class INTRO_FOR_COMPRESSION(Scene):
         img_b.z_index = -2
         path = os.path.join(main_dir, "Data","1_r.png")
         img_r = ImageMobject(path).scale(0.15)
-
-
-        self.play(Transform(img_took, img_r))
-        self.play(FadeIn(img_g), FadeIn(img_b))
-        self.wait(1)
 
         img_width, img_height = img_r.width, img_r.height
         grid_size = 8 # 16x16 grid
@@ -128,26 +118,25 @@ class INTRO_FOR_COMPRESSION(Scene):
                 # Draw the entire grid at once 
         Text = Tex("Types of redundancies in images", font_size=50).move_to(DOWN*2.5)
         Text.color = YELLOW
-        self.play(Transform(text12, Text))
+        self.play(Write(Text))
         self.wait(1)
 
         ### spatial and spectral mentioned
         text_spectral = Tex("Spectral redundancy exists between RGB channels", font_size=40).move_to(DOWN*2.5)
         text_spectral.color = YELLOW
-        self.play(Transform(text12, text_spectral))
+        self.play(Transform(Text,text_spectral))
+        self.play(Transform(img_took, img_r))
+        self.play(FadeIn(img_g), FadeIn(img_b))
         self.wait(1)
         
-        self.remove(text12)
-        self.remove(text_spectral)
+        self.play(FadeOut(Text), FadeOut(img_g), FadeOut(img_b))
         self.play(*[Create(rect) for rect in rectangles])
         self.wait(1)
-        ### draw 4 arrows in 4 directions in 28th rectangle
-        self.play(FadeOut(img_b), FadeOut(img_g), FadeOut(img_r))
 
-        arrow1 = Arrow(start=rectangles[27].get_center(), end=rectangles[35].get_center(), color=WHITE)
-        arrow2 = Arrow(start=rectangles[27].get_center(), end=rectangles[19].get_center(), color=WHITE)
-        arrow3 = Arrow(start=rectangles[27].get_center(), end=rectangles[27].get_center()+LEFT, color=WHITE)
-        arrow4 = Arrow(start=rectangles[27].get_center(), end=rectangles[27].get_center()+RIGHT, color=WHITE)
+        arrow1 = Arrow(start=rectangles[27].get_center()+UP*0.5, end=rectangles[27].get_center()+DOWN*0.5, color=WHITE)
+        arrow2 = Arrow(start=rectangles[27].get_center()+DOWN*0.5, end=rectangles[27].get_center()+UP*0.5, color=WHITE)
+        arrow3 = Arrow(start=rectangles[27].get_center()+RIGHT*0.5, end=rectangles[27].get_center()+LEFT, color=WHITE)
+        arrow4 = Arrow(start=rectangles[27].get_center()+LEFT*0.5, end=rectangles[27].get_center()+RIGHT, color=WHITE)
         self.play(Create(arrow1), Create(arrow2), Create(arrow3), Create(arrow4))
         self.wait(2)
 
@@ -157,7 +146,20 @@ class INTRO_FOR_COMPRESSION(Scene):
 
         self.wait(1)
         self.play(FadeOut(text_spatial))
-        text_summary = Tex("Considering these facts, we compress the image to retain only meaningful information.", font_size=40).move_to(DOWN*3)
+        text_summary = Tex("Besides reducing statistical redundancy by entropy coding and transform techniques, \nthe prediction and quantization techniques are used to \nreduce spatial redundancy and visual redundancy in images").move_to(DOWN*2.5).scale(0.7)
         text_summary.color = YELLOW
         self.play(Write(text_summary))
         self.wait(2)
+
+        self.play(FadeOut(text_summary), FadeOut(arrow1), FadeOut(arrow2), FadeOut(arrow3), FadeOut(arrow4))
+
+
+        rectangles_color = [0, 1, 8]
+        for j in range(3):
+            for i in rectangles_color:
+                self.play(rectangles[i+j].animate.set_fill(GREEN, 0.5))
+            self.play(rectangles[9+j].animate.set_fill(RED, 0.5))
+
+        
+
+
